@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import pandas as pd
 from flask import Flask, render_template, redirect, url_for, flash, current_app, request, send_file, send_from_directory
+from flask_sqlalchemy import SQLAlchemy
 
 
 load_dotenv()
@@ -11,13 +12,32 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
 
-    # """
-    # Renders the index.html template and returns it as the response for the root URL ("/").
 
-    # Returns:
-    #     The rendered index.html template.
-    # """
+db = SQLAlchemy()
+db.init_app(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+
+
+class To_do(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    to_do_item = db.Column(db.String(80), unique=False, nullable=False)
+
+
+with app.app_context():
+    db.create_all()
+
+
+
+
+
+
+
+
 
 
 @app.route('/')
