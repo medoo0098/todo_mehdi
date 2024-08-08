@@ -1,3 +1,7 @@
 SECRET_KEY = "put your key"
 
+<<<<<<< HEAD
 intentionally provoked error 
+=======
+DATABASE_URL=YOUR_DB_URL
+>>>>>>> 313f8ee908b3466766e3ba64eb0ce638e9b08ad4
