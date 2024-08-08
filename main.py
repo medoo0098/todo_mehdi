@@ -8,6 +8,9 @@ from flask_sqlalchemy import SQLAlchemy
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
