@@ -15,7 +15,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 
 db = SQLAlchemy()
