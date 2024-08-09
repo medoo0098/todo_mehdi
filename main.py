@@ -29,6 +29,9 @@ class User(db.Model):
 class To_do(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     to_do_item = db.Column(db.String(80), unique=False, nullable=False)
+    is_complete = db.column(db.boolean, default=False)
+    note = db.column(db.String(400), nulable=True, unique=False)
+    
 
 
 with app.app_context():
