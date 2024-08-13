@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 import os
-import pandas as pd
 from flask import Flask, render_template, redirect, url_for, flash, current_app, request, send_file, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
