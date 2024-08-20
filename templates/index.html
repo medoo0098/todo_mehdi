@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" href="static/style.css">
-    <title>To-Do</title>
-</head>
-<body>
-    <h1>Works</h1><br>
-    <h2>TODO</h2><hr>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} 
+    <title>{{title}}</title>
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>{{title}}</h1><br>
+    <h2>H2 line</h2><hr>
+{% endblock %}
