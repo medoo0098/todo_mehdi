@@ -1,25 +1,24 @@
-from config import Config
+from config import Config, db
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from routes import *
+from routes import init_routes
+from models import User, ToDo
 
 
 
 def create_app():
-    app = Flask(__name__)
-    app.comfig.from_object(Config)
-    db = SQLAlchemy()
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
+    app = Flask(__name__)  # initilizing flask app
+    app.config.from_object(Config)  # reading config from Config object created in config.py
+    db.init_app(app)  # initialising database within the app , created in config.py
+    with app.app_context():  # within the app context we are creating tables, (all) created in models.py 
+        db.create_all()  # fucntion to create all tables (models from models,py)
     
-    
+    init_routes(app)  # the fucntion to route all routes in a function called init route, created in routes.py
 
-    return app
-
-
-app = create_app()
+    return app  # app in returned as an value 
 
 
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+app = create_app()  # from fonction create app, flask app is being created
+
+
+if __name__ == "__main__":  # 
+    app.run(host="0.0.0.0", port=5001)
