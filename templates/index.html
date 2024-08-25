@@ -7,8 +7,39 @@
 
 
 {% block content %}
-<div>
+<div class="container" >
     <h1>{{title}}</h1><br>
-    <h2>H2 line</h2><hr>
+    
+    <form action="{{url_for('index')}}" method="post">
+        
+        {{form.hidden_tag()}}
+        {{form.to_do_item.label}}
+        {{form.to_do_item}}
+        <br>
+        <br>
+        {{form.note.label}}
+        {{form.note}}
+        <br>
+        <br>
+
+        {{ form.Add }}
+    </form>
+
+    <hr style="margin: 20px;">
+    <br>
+<ul>
+    
+    {% for item in list_items %}
+    <li style="margin: 10px;">
+            completed : {{item.is_complete}}, 
+            {{item.to_do_item}},
+            {{item.note}}
+    </li>    
+    {% endfor %}
+    
+</ul>
 </div>
 {% endblock %}
+
+<!-- {{form.is_complete.label}}
+        {{form.is_complete}} -->
