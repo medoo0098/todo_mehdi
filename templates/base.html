@@ -20,23 +20,21 @@
           </div>
     
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Features</a></li>
-            <li><a href="#" class="nav-link px-2">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2">About</a></li>
+            <li><a href="{{url_for('index')}}" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="{{url_for('about')}}" class="nav-link px-2">About</a></li>
+            <li><p class="nav-link px-2">current user: {{current_user.username}}</p></li>
           </ul>
     
           <div class="col-md-3 text-end">
             <button type="button" class="btn btn-outline-primary me-2">
                 <a href="{{url_for('login')}}">Login</a>
             </button>
-            <button type="button" class="btn btn-primary">Sign-up</button>
+            <button type="button" class="btn btn-primary"><a style="color: white;" href="{{url_for('register')}}">Sign up</a></button>
           </div>
         </header>
       </div>
 
-   <div class="container w-50">   
+   <div class="container w-50 ">   
    {% block content %}
    {% endblock %}
     </div>
@@ -46,11 +44,11 @@
         <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
           <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
         </a>
-        <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Singer LTD</span>
       </div>
   
       <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+        <li class="ms-3"><a class="text-body-secondary" href="https://x.com"><svg class="bi" width="24" height="24"><use xlink:href=""></use></svg></a></li>
         <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
         <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
       </ul>
