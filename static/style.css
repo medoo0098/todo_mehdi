@@ -5,3 +5,6 @@ html{
 h2{
     color: blue;
 }
+.container{
+    min-height: 300px;
+}
