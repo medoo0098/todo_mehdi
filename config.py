@@ -3,8 +3,11 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 
 
+
 # import enviromental variables 
 load_dotenv()  # makking .env file easilly accessible for the fucntion 
+
+
 
 
 class Config:  
