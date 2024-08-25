@@ -4,7 +4,6 @@ from routes import init_routes
 from models import User, ToDo
 
 
-
 def create_app():
     app = Flask(__name__)  # initilizing flask app
     app.config.from_object(Config)  # reading config from Config object created in config.py
