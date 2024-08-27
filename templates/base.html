@@ -22,14 +22,20 @@
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{{url_for('index')}}" class="nav-link px-2 link-secondary">Home</a></li>
             <li><a href="{{url_for('about')}}" class="nav-link px-2">About</a></li>
-            <li><p class="nav-link px-2">current user: {{current_user.username}}</p></li>
+            
           </ul>
     
-          <div class="col-md-3 text-end">
+          <div class="col-md-3 text-end flex-row d-flex">
+            {% if current_user.username %}
+            <!-- <p>{{current_user.username | capitalize}}</p> -->
+             <span class="fw-bold d-flex align-items-center" >{{current_user.username | capitalize}} &nbsp; </span>
+            <a class="btn btn-secondary" href="{{url_for('logout')}}">Log out</a>
+            {%else%}
             <button type="button" class="btn btn-outline-primary me-2">
                 <a href="{{url_for('login')}}">Login</a>
             </button>
             <button type="button" class="btn btn-primary"><a style="color: white;" href="{{url_for('register')}}">Sign up</a></button>
+            {% endif %}
           </div>
         </header>
       </div>
