@@ -9,7 +9,7 @@
 
 {% if errors %} {% for error in errors %} {{error[0]}} {% endfor %} {% endif %}
 <div class="container" >
-    <h1 class=mt-5>{{title}}</h1>
+    <h1 class="mt-5 text-center">{{title}}</h1>
   <form action="{{url_for('register')}}" method="post">
     {{form.hidden_tag()}}
     <div class="form-group">
