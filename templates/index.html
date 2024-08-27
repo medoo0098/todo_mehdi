@@ -1,43 +1,54 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}
+<title>{{title}}</title>
 
-{% block title %} 
-    <title>{{title}}</title>
+{% endblock %} {% block content %}
+<div class="container">
+  <h1>{{title}}</h1>
+  <br />
 
-{% endblock %}
+  <a class="btn btn-primary" href="{{url_for('add_task')}}">Add new Task</a>
 
+  <hr style="margin: 20px" />
+  <br />
+  {% if list_items | length > 0%}
+  <table class="table container table-striped table-bordered">
+    <thead>
+      <tr>
+        <th class="col-1" scope="col">#</th>
+        <th class="col-4" scope="col">Task</th>
+        <th scope="col">Note</th>
+        <th class="col-1" scope="col">Completed</th>
+        <th class="col-1" scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in list_items %}
 
-{% block content %}
-<div class="container" >
-    <h1>{{title}}</h1><br>
-    
-    <form action="{{url_for('index')}}" method="post">
-        
-        {{form.hidden_tag()}}
-        {{form.to_do_item.label}}
-        {{form.to_do_item}}
-        <br>
-        <br>
-        {{form.note.label}}
-        {{form.note}}
-        <br>
-        <br>
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{item.to_do_item}}</td>
+        <td>{{item.note}}</td>
+        <td>
+          <a class="btn btn-primary" href="#">
+            {% if item.is_complete %} Yes {% else %} No {% endif %}
+          </a>
+        </td>
+        <td>
+          <a
+            class="btn btn-danger"
+            href="{{url_for('delete', todo_id=item.id)}}"
+            >Delete</a
+          >
+        </td>
+      </tr>
 
-        {{ form.Add }}
-    </form>
+      {% endfor %}
 
-    <hr style="margin: 20px;">
-    <br>
-<ul>
-    
-    {% for item in list_items %}
-    <li style="margin: 10px;">
-            completed : {{item.is_complete}}, 
-            {{item.to_do_item}},
-            {{item.note}}
-    </li>    
-    {% endfor %}
-    
-</ul>
+    </tbody>
+  </table>
+  {% else %}
+  <p>No items to show</p>
+  {% endif %}
 </div>
 {% endblock %}
 
