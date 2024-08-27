@@ -3,7 +3,7 @@
 
 {% endblock %} {% block content %}
 <div class="container">
-  <h1>{{title}}</h1>
+  <h1 class="text-center">{{title}}</h1>
   <br />
 
   <a class="btn btn-primary" href="{{url_for('add_task')}}">Add new Task</a>
@@ -11,7 +11,7 @@
   <hr style="margin: 20px" />
   <br />
   {% if list_items | length > 0%}
-  <table class="table container table-striped table-bordered">
+  <table class="table container table-striped table-bordered" >
     <thead>
       <tr>
         <th class="col-1" scope="col">#</th>
@@ -22,16 +22,18 @@
       </tr>
     </thead>
     <tbody>
-      {% for item in list_items %}
+      {% for item in list_items|reverse %}
 
       <tr>
         <th scope="row">{{loop.index}}</th>
         <td>{{item.to_do_item}}</td>
         <td>{{item.note}}</td>
         <td>
-          <a class="btn btn-primary" href="#">
-            {% if item.is_complete %} Yes {% else %} No {% endif %}
-          </a>
+          {% if item.is_complete %}
+          <a class="btn btn-success"  href="{{url_for('edit', todo_id=item.id)}}">Yes</a>
+          {% else %}
+          <a class="btn btn-primary" href="{{url_for('edit', todo_id=item.id)}}">No</a>
+          {% endif %}
         </td>
         <td>
           <a
