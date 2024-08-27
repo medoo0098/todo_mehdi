@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, session
 from models import User, ToDo
 from forms import RegisterForm, ToDoForm
 from config import db
@@ -18,33 +18,56 @@ def init_routes(app):
     
 
     @app.route('/', methods=["GET","POST"])
+    @login_required
     def index():
+
+        
+            
+        list_items = list(ToDo.query.filter_by(user_id=current_user.id))
+        if len(list_items)<1:
+            print("No items added")
+        else:
+
+            for item in list_items:
+                print(item.to_do_item)
+
+        return render_template('index.html', title="TODO", list_items=list_items)
+
+
+
+
+    @app.route("/add_task", methods=["GET", "POST"])
+    @login_required
+    def add_task():
+
         form = ToDoForm()
         if form.validate_on_submit():
             new_todo = ToDo(
                 to_do_item = form.to_do_item.data,
                 is_complete = form.is_complete.data,
-                note = form.note.data
+                note = form.note.data,
+                user_id = current_user.id
             )
             db.session.add(new_todo)
             db.session.commit()
             return redirect(url_for("index"))
-            
-        list_items = ToDo.query.all()
-        for item in list_items:
-            print(item.to_do_item)
+
+        return render_template("add-item.html", form=form, title="Add new task")
 
 
-        if current_user:
-            
-            return render_template('index.html', title="TODO", form=form, list_items=list_items, current_user=current_user)
-        else:
-            return render_template('index.html', title="TODO", form=form, list_items=list_items)
 
+    @app.route("/delete/<int:todo_id>", methods=["GET"])
+    @login_required
+    def delete(todo_id):
+        todo = ToDo.query.filter_by(id=todo_id).first_or_404()
+        db.session.delete(todo)
+        db.session.commit()
+        return redirect(url_for("index"))
 
     @app.route('/login', methods=("GET", "POST"))
     def login():
         if current_user.is_authenticated:
+            print("user is authenticated")
             return redirect(url_for("index"))
         
         if request.method == "POST":
@@ -53,11 +76,10 @@ def init_routes(app):
             user = User.query.filter_by(username = username).first()
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
+                print("user is logged in")
                 return redirect(url_for("index"))
 
             
-
-            print(user.username)
             
 
             # print(f" username = {username} , password = {password}")
@@ -86,3 +108,11 @@ def init_routes(app):
     @app.route("/aboute")
     def about():
         return render_template("about.html", title="About")
+    
+
+    @app.route("/logout")
+    def logout():
+        # session.pop(current_user, None)
+        logout_user()
+        print("user logged out")
+        return redirect(url_for("login"))
