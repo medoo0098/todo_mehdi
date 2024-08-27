@@ -34,6 +34,15 @@ def init_routes(app):
         return render_template('index.html', title="TODO", list_items=list_items)
 
 
+    @app.route("/edit/<int:todo_id>", methods=["GET"])
+    @login_required
+    def edit(todo_id):
+        todo=ToDo.query.filter_by(id=todo_id).first_or_404()
+        print(f"        items is {todo.is_complete}")
+        todo.is_complete = not todo.is_complete
+        db.session.commit()
+        print(f"        items is {todo.is_complete}")
+        return redirect(url_for("index"))
 
 
     @app.route("/add_task", methods=["GET", "POST"])
@@ -63,6 +72,9 @@ def init_routes(app):
         db.session.delete(todo)
         db.session.commit()
         return redirect(url_for("index"))
+    
+
+    
 
     @app.route('/login', methods=("GET", "POST"))
     def login():
