@@ -15,6 +15,7 @@ class ToDo(db.Model):
     to_do_item = db.Column(db.String(80), unique=False, nullable=False)
     is_complete = db.Column(db.Boolean, default=False)
     note = db.Column(db.String(400), nullable=True, unique=False)
+    time = db.Column(db.DateTime(timezone=True))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
 
 
