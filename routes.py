@@ -1,8 +1,9 @@
-from flask import render_template, request, url_for, redirect, session
+from flask import render_template, request, url_for, redirect, session, flash
 from models import User, ToDo
 from forms import RegisterForm, ToDoForm
 from config import db
 from werkzeug.security import generate_password_hash, check_password_hash 
+from datetime import datetime
 
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
@@ -24,6 +25,7 @@ def init_routes(app):
         
             
         list_items = list(ToDo.query.filter_by(user_id=current_user.id))
+        list_items = sorted(list_items, key=lambda x: x.time)
         if len(list_items)<1:
             print("No items added")
         else:
@@ -55,11 +57,15 @@ def init_routes(app):
                 to_do_item = form.to_do_item.data,
                 is_complete = form.is_complete.data,
                 note = form.note.data,
+                time = datetime.now(),
                 user_id = current_user.id
             )
             db.session.add(new_todo)
             db.session.commit()
+            flash(f"Task added successfully", "success")
             return redirect(url_for("index"))
+        else:
+            flash(f"Something went wrong", "danger")
 
         return render_template("add-item.html", form=form, title="Add new task")
 
@@ -79,7 +85,7 @@ def init_routes(app):
     @app.route('/login', methods=("GET", "POST"))
     def login():
         if current_user.is_authenticated:
-            print("user is authenticated")
+            flash(f"user {current_user.username} is loggedin.", "success")
             return redirect(url_for("index"))
         
         if request.method == "POST":
@@ -88,8 +94,10 @@ def init_routes(app):
             user = User.query.filter_by(username = username).first()
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
-                print("user is logged in")
+                flash(f"user {current_user.username} is loggedin.", "success")
                 return redirect(url_for("index"))
+            else:
+                flash(f"incorrect username or password", "danger")
 
             
             
@@ -125,6 +133,7 @@ def init_routes(app):
     @app.route("/logout")
     def logout():
         # session.pop(current_user, None)
+        user = current_user.username
         logout_user()
-        print("user logged out")
+        flash(f"user {user.capitalize()} is logged out.", "warning")
         return redirect(url_for("login"))
