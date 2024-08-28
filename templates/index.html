@@ -2,7 +2,7 @@
 <title>{{title}}</title>
 
 {% endblock %} {% block content %}
-<div class="container">
+<div class="container min-vw-80">
   <h1 class="text-center">{{title}}</h1>
   <br />
 
@@ -11,11 +11,12 @@
   <hr style="margin: 20px" />
   <br />
   {% if list_items | length > 0%}
-  <table class="table container table-striped table-bordered" >
+  <table class="table container table-striped table-bordered ">
     <thead>
       <tr>
         <th class="col-1" scope="col">#</th>
-        <th class="col-4" scope="col">Task</th>
+        <th class="col-2" scope="col">Task</th>
+        <th class="col-4" scope="col">Created</th>
         <th scope="col">Note</th>
         <th class="col-1" scope="col">Completed</th>
         <th class="col-1" scope="col">Delete</th>
@@ -27,12 +28,17 @@
       <tr>
         <th scope="row">{{loop.index}}</th>
         <td>{{item.to_do_item}}</td>
+        <td>{{item.time.strftime("%Y/%m/%d | %H:%M")}}</td>
         <td>{{item.note}}</td>
         <td>
           {% if item.is_complete %}
-          <a class="btn btn-success"  href="{{url_for('edit', todo_id=item.id)}}">Yes</a>
+          <a class="btn btn-success" href="{{url_for('edit', todo_id=item.id)}}"
+            >Yes</a
+          >
           {% else %}
-          <a class="btn btn-primary" href="{{url_for('edit', todo_id=item.id)}}">No</a>
+          <a class="btn btn-primary" href="{{url_for('edit', todo_id=item.id)}}"
+            >No</a
+          >
           {% endif %}
         </td>
         <td>
@@ -45,7 +51,6 @@
       </tr>
 
       {% endfor %}
-
     </tbody>
   </table>
   {% else %}
