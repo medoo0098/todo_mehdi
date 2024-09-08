@@ -31,3 +31,7 @@ This is a simple full stack app for making a todo list.
 - Create `.env` file (see `env-sample.txt`)
 - Install requirements in venv: `pip install -r requirements.txt`
 - Run the application: `python main.py`
+
+
+## copyright details:
+&copy; Mehdi Singer 2024. All Right Reserved.
