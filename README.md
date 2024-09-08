@@ -17,6 +17,7 @@ This is a simple full stack app for making a todo list.
 - SQLAlchemy
 - OS
 - dotenv
+- PostgreSQL database: [Neontech](https://neon.tech/)
 
 ## Cloning the Repo to Local Computer 
 [github repo](https://github.com/medoo0098/todo_mehdi.git)
