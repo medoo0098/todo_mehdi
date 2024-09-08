@@ -90,8 +90,8 @@ def init_routes(app):
             user = User.query.filter_by(username=username).first()
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
-                flash(f"user {current_user.username.capitalize()
-                              } is loggedin.", "success")
+                flash(f"user {current_user.username.capitalize()} is loggedin.",
+                       "success")
                 return redirect(url_for("index"))
             else:
                 flash(f"incorrect username or password", "danger")
